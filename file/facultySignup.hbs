@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Signup</title>
+</head>
+<body>
+    <h1>Faculty Signup</h1>
+    <form action="/faculty/signup" method="POST">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <div>
+            <label for="department">Department:</label>
+            <select id="department" name="department" required>
+                <option value="" disabled selected>Select your department</option>
+                <option value="Computer">Computer</option>
+                <option value="Mechanical">Mechanical</option>
+                <option value="Automobile">Automobile</option>
+                <option value="Electrical and Computer Science">Electrical and Computer Science</option>
+            </select>
+        </div>
+        <button type="submit">Sign Up</button>
+    </form>
+</body>
+</html>
+

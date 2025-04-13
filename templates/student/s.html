@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAAC ACCREDITATION SYSTEM</title>
+    <link rel="stylesheet" href="css/dashadmin.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        /* Simple CSS for the slideshow */
+        .slideshow-container {
+            position: relative;
+            max-width: 60%;
+            margin: auto;
+            overflow: hidden;
+            box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+            margin-top: 50px;
+        
+        }
+
+        .slides {
+            display: none;
+        }
+
+        img {
+            width: 100%;
+            height: auto;
+        }
+
+        .prev, .next {
+            cursor: pointer;
+            position: absolute;
+            top: 50%;
+            width: auto;
+            padding: 16px;
+            color: white;
+            font-weight: bold;
+            font-size: 18px;
+            transition: 0.6s ease;
+            border-radius: 0 3px 3px 0;
+            user-select: none;
+        }
+
+        .next {
+            right: 0;
+            border-radius: 3px 0 0 3px;
+        }
+
+        .prev:hover, .next:hover {
+            background-color: rgba(0,0,0,0.8);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="nav-bar">
+        <nav>
+            <div class="logo"></div>
+            <div class="text">
+                <h4>PSPS's</h4>
+                <h2>Rajendra Mane College of Engineering & Technology</h2>
+                <h3>Ambav, Ratnagiri Maharashtra</h3>
+            </div>
+        </nav>
+    </div>
+    <div class="pic">
+        <i class="fa-solid fa-user" style="color: #fff;" onclick="toggleMenu()"></i>
+
+        <div class="sub-menu-wrap" id="subMenu">
+            <div class="sub-menu">
+                <div class="user-info">
+                    <img src="css/admin.png">
+                    <h2>Admin Dashboard</h2>
+                </div>
+                <hr>
+
+                <form method="POST" action="/logout">
+                    <button type="submit"><a href="http://localhost:3000/adminLogin" style="text-decoration: none; font-weight:600;color:#fff;">Logout</a></button>
+                </form>
+            </div>
+        </div>
+
+        <div id="navigation">
+            <div id="menu" onclick="onclickmenu()">
+                <div id="bar1" class="bar"></div>
+                <div id="bar2" class="bar"></div>
+                <div id="bar3" class="bar"></div>
+            </div>
+            <ul class="nav" id="nav">
+                <li><a href="http://127.0.0.1:5500/achievement-data/admin.html">Student</a></li>
+                <li><a href="#">Faculty</a></li>
+                <li><a href="#">Create Faculty</a></li>
+            </ul>
+        </div>
+    </div>
+
+    
+
+    <!-- Bar Graph for Year-wise Achievement -->
+    <div style="width: 50%; margin: 20px auto; margin-top:400px;">
+        <canvas id="myBarChart"></canvas>
+    </div>
+    <h1 style="text-align: center;font-family:Arial, Helvetica, sans-serif;margin-top:20px">Year-wise Institute Achievement!</h1>
+        <!-- Slideshow for Photos -->
+    <div class="slideshow-container">
+        <div class="slides fade">
+            <img src="css/mg1.jpeg" alt="Image 1">
+        </div>
+        <div class="slides fade">
+            <img src="css/mg2.jpeg" alt="Image 2">
+        </div>
+        <div class="slides fade">
+            <img src="css/mg3.jpeg" alt="Image 3">
+        </div>
+        <div class="slides fade">
+            <img src="css/mg4.jpeg" alt="Image 4">
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+    </div>
+    <h1 style="text-align: center;font-family:Arial, Helvetica, sans-serif;margin-top:20px">TopAchievement!</h1>
+
+    <!-- Pie Chart for Department-wise Achievement -->
+    <div style="width: 40%; margin: 20px auto; margin-top:90px">
+        <canvas id="myPieChart"></canvas>
+    </div>
+    <h1 style="text-align: center;font-family:Arial, Helvetica, sans-serif;margin-top:20px">Department-wise Achievement!</h1>
+
+    <!-- Congratulatory Message in Marquee -->
+    <marquee id="congratsMessage" style="text-align: center; margin-top: 40px; font-size: 1.5em; background-color: aqua; font-family: Arial, Helvetica, sans-serif;"></marquee>
+
+    <script>
+        let subMenu = document.getElementById("subMenu");
+        function toggleMenu() {
+            subMenu.classList.toggle("open-menu");
+        }
+
+        function onclickmenu() {
+            document.getElementById("menu").classList.toggle("icon");
+            document.getElementById("nav").classList.toggle("change");
+        }
+
+        // Slideshow functionality
+        let slideIndex = 0;
+        showSlides();
+
+        function showSlides() {
+            let slides = document.getElementsByClassName("slides");
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slideIndex++;
+            if (slideIndex > slides.length) {slideIndex = 1}    
+            slides[slideIndex - 1].style.display = "block";  
+            setTimeout(showSlides, 3000); // Change image every 3 seconds
+        }
+
+        function plusSlides(n) {
+            slideIndex += n;
+            let slides = document.getElementsByClassName("slides");
+            if (slideIndex > slides.length) {slideIndex = 1}
+            if (slideIndex < 1) {slideIndex = slides.length}
+            for (let i = 0; i < slides.length; i++) {
+                slides[i].style.display = "none";  
+            }
+            slides[slideIndex - 1].style.display = "block";  
+        }
+
+        // Pie Chart for Department-wise Achievement
+        const ctxPie = document.getElementById('myPieChart').getContext('2d');
+        const departments = ['Computer', 'Mechanical', 'Automobile', 'Electrical', 'Computer Science'];
+        const achievements = [240, 150, 100, 80, 220]; // Example data
+
+        const myPieChart = new Chart(ctxPie, {
+            type: 'pie',
+            data: {
+                labels: departments,
+                datasets: [{
+                    label: 'Department-wise Achievements',
+                    data: achievements,
+                    backgroundColor: ['#FF6384', '#36A2EB', '#FFCE56', '#4BC0C0', '#9966FF'],
+                    hoverOffset: 4
+                }]
+            }
+        });
+
+        // Determine the department with the highest achievement
+        const highestAchievementIndex = achievements.indexOf(Math.max(...achievements));
+        const topDepartment = departments[highestAchievementIndex];
+        const topAchievement = achievements[highestAchievementIndex];
+
+        // Congratulatory Message
+        const congratsMessage = document.getElementById('congratsMessage');
+        congratsMessage.textContent = `🎉🎉Congratulations to the ${topDepartment} department for achieving the highest achievement of ${topAchievement}!🎉🎉`;
+
+        // Bar Graph for Year-wise Achievement
+        const ctxBar = document.getElementById('myBarChart').getContext('2d');
+        const myBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['2020', '2021', '2022', '2023', '2024'],
+                datasets: [{
+                    label: 'Year-wise Achievements',
+                    data: [150, 200, 250, 300, 350], // Example data
+                    backgroundColor: '#36A2EB',
+                    borderColor: '#36A2EB',
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                scales: {
+                    y: {
+                        beginAtZero: true,
+                        title: {
+                            display: true,
+                            text: 'Achievements'
+                        }
+                    },
+                    x: {
+                        title: {
+                            display: true,
+                            text: 'Year'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+</body>
+
+</html>
+

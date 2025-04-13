@@ -1,0 +1,154 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: Inter;
+}
+
+body {
+    align-content: center;
+}
+
+.nav-bar {
+    width: 100%;
+    height: 140px;
+    background-color: #cce5ff;
+    align-content: center;
+}
+
+.logo {
+    background-image: url(logo\ rmcet1.png);
+    width: 100px;
+    height: 100px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    border-radius: 50px;
+    position: relative;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    border-radius: 213.12px;
+    background-color: #fff;
+    overflow: hidden;
+    flex-shrink: 0;
+}
+
+nav {
+    display: flex;
+    justify-content: center;
+}
+
+.text h4 {
+    font-weight: bold;
+}
+
+.text {
+    align-self: center;
+    margin-left: 40px;
+    font-family: Inter;
+}
+
+.txt {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin-top: 40px;
+}
+
+.txt h5 {
+    font-size: 25px;
+}
+
+.txt p {
+    color: #747b81;
+}
+
+.form-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 30px;
+}
+
+.title {
+    margin-top: 20px;
+    font-size: 25px;
+    font-weight: bold;
+    color: #437FC7;
+}
+
+.inp input {
+    flex-direction: column;
+    margin-top: 40px;
+    height: 40px;
+    width: 250px;
+    border: 1.38px solid #437FC7;
+    border-radius: 5px;
+    /* justify-items: center; */
+    padding-left: 10px;
+    color: #437FC7;
+}
+input
+    {
+        flex-direction: column;
+        margin-top: 40px;
+        height: 40px;
+        width: 250px;
+        border: 1.38px solid #437FC7;
+        border-radius: 5px;
+        /* justify-items: center; */
+        padding-left: 10px;
+        color: #437FC7;
+    }
+   select
+    {
+        flex-direction: column;
+        margin-top: 40px;
+        height: 40px;
+        width: 250px;
+        border: 1.38px solid #437FC7;
+        border-radius: 5px;
+        /* justify-items: center; */
+        padding-left: 10px;
+        color: #437FC7;text-align: center;
+    }
+
+
+ ::placeholder {
+    color: #437FC7;
+}
+
+.for {
+    font-size: 13px;
+    color: red;
+    margin-top: 10px;
+}
+
+.submit-btn button {
+    width: 180px;
+    background-color: #437FC7;
+    color: #fff;
+    font-size: 15px;
+    height: 45px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: none;
+}
+button{
+    width: 180px;
+    background-color: #437FC7;
+    color: #fff;
+    font-size: 15px;
+    height: 45px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: none;
+}
+
+@media screen and (max-width: 900px) {
+    .logo {
+        margin-left: 10px;
+    }
+    .text {
+        font-size: 10px;
+    }
+}

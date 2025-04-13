@@ -1,0 +1,34 @@
+const mongoose = require('mongoose');
+
+mongoose.connect("mongodb://127.0.0.1:27017/Authtutorial")
+.then(()=>{
+console.log("mongo connected");
+
+})
+.catch(()=>{
+    console.log("error to connect database");
+    
+})
+
+const Schema = new mongoose.Schema({
+    name:{
+        type:String,
+        required:true
+    },
+    password:{
+        type:String,
+        required:true
+    },
+    // role:{
+    //     type:String,
+    //     required:true
+    // },
+    token:{
+        type:String,
+        required:true
+    }
+})
+
+const Collection = new mongoose.model("Authcollection",Schema)
+
+module.exports= Collection

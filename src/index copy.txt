@@ -1,0 +1,111 @@
+const express = require('express');
+const mongoose = require('mongoose');
+const Collection = require("./mongo"); // Your MongoDB model
+const path = require("path");
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const bcryptjs = require('bcryptjs');
+
+const app = express();
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({ extended: false }));
+
+const templatePath = path.join(__dirname, "../templates");
+const publicPath = path.join(__dirname, "../public");
+
+app.set('view engine', 'hbs');
+app.set("views", templatePath);
+app.use(express.static(publicPath));
+
+// Hash and compare passwords
+async function hashPass(password) {
+    return await bcryptjs.hash(password, 10);
+}
+
+async function compare(userPass, hashPass) {
+    return await bcryptjs.compare(userPass, hashPass);
+}
+
+// Render the login page
+app.get("/", (req, res) => {
+    res.render("login");
+});
+
+// Render the signup page
+app.get("/signup", (req, res) => {
+    res.render("signup");
+});
+
+// Signup route
+app.post("/signup", async (req, res) => {
+    try {
+        const { email, password, role } = req.body; // Get role from request body
+        const check = await Collection.findOne({ email });
+
+        if (check) {
+            return res.send("User already exists");
+        }
+
+        const token = jwt.sign({ email, role }, "your_secret_key");
+
+        const data = {
+            email,
+            password: await hashPass(password),
+            role, // Save role to the database
+            token
+        };
+
+        await Collection.insertMany([data]);
+
+        // Render the appropriate home page based on the role
+        if (role === 'faculty') {
+            res.render("faculty", { email });
+        } else {
+            res.render("student", { email });
+        }
+    } catch (err) {
+        console.error(err);
+        res.send("Error signing up");
+    }
+});
+
+// Login route
+app.post("/login", async (req, res) => {
+    try {
+        const user = await Collection.findOne({ email: req.body.email });
+
+        if (!user) {
+            return res.send("User not found");
+        }
+
+        const passCheck = await compare(req.body.password, user.password);
+
+        if (passCheck) {
+            // Render the appropriate home page based on the role
+            if (user.role === 'faculty') {
+                res.render("faculty", { email: user.email });
+            } else {
+                res.render("student", { email: user.email });
+            }
+        } else {
+            res.send("Wrong password");
+        }
+    } catch (err) {
+        console.error(err);
+        res.send("Error logging in");
+    }
+});
+
+// Logout route
+app.post("/logout", (req, res) => {
+    res.clearCookie("jwt");
+    res.redirect("/");
+});
+
+// Listen on a specified port
+const port = 3000;
+app.listen(port, () => {
+    console.log(`Server is running on port ${port}`);
+});

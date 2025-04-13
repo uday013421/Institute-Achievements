@@ -1,0 +1,81 @@
+{{!-- <!-- facultyLogin.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Faculty Login</title>
+</head>
+<body>
+    <h1>Faculty Login</h1>
+    <form action="/faculty/login" method="POST">
+        <div>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+        </div>
+        <div>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+        </div>
+        <button type="submit">Login</button>
+    </form>
+</body>
+</html> --}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NAAC ACCREDITATION SYSTEM</title>
+    <link rel="stylesheet" href="css/login.css">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap" />
+</head>
+
+
+<body>  <div class="nav-bar">
+    <nav>
+        <div class="logo">
+
+        </div>
+        <div class="text">
+            <h4>PSPS's</h4>
+            <h2>Rajendra Mane College of Engineering & Technology</h2>
+            <h3>Ambav, Ratnagiri Maharashtra</h3>
+        </div>
+    </nav>
+</div>
+    
+    <div class="txt">
+        <h5>Hi, Welcome back!</h5>
+        <p>Use your College Domain mail-Id to login</p>
+    </div>
+    <form action="/faculty/login" method="post">
+        <div class="form-container">
+            <div class="content">
+                <div class="title">
+                    <p>FacultyLogin</p>
+                </div>
+                <div class="inp">
+                    <input type="email" placeholder="Enter your email-id here" id="email" name="email" required autocomplete="off"><br>
+                </div>
+                <div class="inp">
+                    <input type="password" name="password" id="password" placeholder="Enter your password" autocomplete="off">
+                </div>
+                {{!-- <div class="for">
+                    <p><a href="#">Forgot Password?</a></p>
+                </div> --}}
+                <div class="submit-btn">
+                    <button type="submit">Login</button>
+                </div>
+                {{!-- <p>Don't have an account <a href="/signup">Signup</a></p> --}}
+            </div>
+
+
+        </div>
+    </form>
+
+</body>
+
+</html>

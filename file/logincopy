@@ -1,0 +1,41 @@
+<!-- templates/login.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+</head>
+<body>
+    <h1>Login</h1>
+    <form method="POST" action="/login">
+        <input type="text" name="name" placeholder="Username" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <button type="submit">Login</button>
+    </form>
+    <p>Don't have an account? <a href="/signup">Sign up here</a></p>
+</body>
+</html>
+<!-- templates/signup.hbs -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Signup</title>
+</head>
+<body>
+    <h1>Signup</h1>
+    <form method="POST" action="/signup">
+        <input type="email" name="email" placeholder="email" required />
+        <input type="password" name="password" placeholder="Password" required />
+        <select name="role" required>
+            <option value="disabled selected">Select your role</option>
+            <option value="faculty"><a href="http://localhost:3000/">Faculty</a></option>
+            <option value="student">Student</option>
+        </select>
+        <button type="submit">Sign Up</button>
+    </form>
+    <p>Already have an account? <a href="http://localhost:3000/">Login here</a></p>
+</body>
+</html>

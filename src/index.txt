@@ -1,0 +1,126 @@
+
+
+
+
+
+const express = require('express');
+const mongoose = require('mongoose');
+const Collection = require("./mongo");
+
+const app = express();
+const path = require("path");
+const jwt = require('jsonwebtoken');
+const cookieParser = require('cookie-parser');
+const bcryptjs = require('bcryptjs');
+
+
+app.use(express.json());
+app.use(cookieParser());
+app.use(express.urlencoded({extended:false}));
+
+const templatePath = path.join(__dirname,"../templates");
+const publicPath = path.join(__dirname,"../public");
+
+app.set('view engine', 'hbs');
+app.set("views", templatePath);
+app.use(express.static(publicPath));
+// app.use(express.static(templatePath));
+
+async function hashPass(password){
+
+    const res = await bcryptjs.hash(password,10)
+    return res
+}
+
+async function compare(userPass, hashPass){
+
+    const res = await bcryptjs.compare(userPass, hashPass)
+    return res
+}
+
+
+
+
+app.get("/",(req, res)=>{
+    // if(req.cookies.jwt){
+    //     const verify = jwt.verify(req.cookies.jwt,"asgkydfgskygfkasyugfksygfuysdfksdfsakyfayuygayuwgeuygdfuyaseuedyfuaywsegutydfguwyekewygiugweudfwetdouwysdwoefoawueouyu")
+    //     res.render("home",{name:verify.name})
+    
+    // }
+    // else{
+    //     res.render("login");
+    // }
+          res.render("login");
+
+})
+app.get("/signup",(req, res)=>{
+    res.render("signup")
+})
+
+//post code
+//signup
+app.post("/signup", async(req,res)=>{
+    try{
+        const check = await Collection.findOne({name:req.body.name})
+
+        if(check){
+            res.send("user already exit")
+        }
+        else{
+            const token = jwt.sign({name:req.body.name},"asgkydfgskygfkasyugfksygfuysdfksdfsakyfayuygayuwgeuygdfuyaseuedyfuaywsegutydfguwyekewygiugweudfwetdouwysdwoefoawueouyu")
+            
+            // res.cookie("jwt",token,{
+            //     maxAge:600000,
+            //     httpOnly:true
+            // })
+                       
+            
+            
+            
+            const data ={
+                name:req.body.name,
+                password:await hashPass(req.body.password),
+                token:token
+            }
+
+            await Collection.insertMany([data])
+            res.render("home",{name:req.body.name});
+        }
+    }
+    catch{
+        res.send("wrong detailes");
+    }
+})
+
+
+//login post*********//
+app.post("/login", async(req,res)=>{
+    try{
+        const check = await Collection.findOne({name:req.body.name})
+        const role = await Collection.findOne({role:req.body.role})
+        const passCheck = await compare(req.body.password, check.password)
+
+        if(check && passCheck){
+
+            // res.cookie("jwt", check.token,{
+            //     maxAge:600000,
+            //     httpOnly:true
+            // })
+            res.render("home",{name:req.body.name});
+        }
+        else{
+            
+            res.send("wrong details")
+            
+        }
+    }
+    catch{
+        res.send("wrong detailes");
+    }
+})
+
+const port= 3000;
+app.listen(port,()=>{
+    console.log(`port is connected to the port no ${port}`);
+    
+})
